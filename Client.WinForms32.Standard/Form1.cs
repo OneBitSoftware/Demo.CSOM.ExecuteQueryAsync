@@ -97,11 +97,10 @@ namespace Client.WinForms32.Standard
             return content;
         }
 
-
         #region Authentication code
         private void AssignCredentials()
         {
-            Username = "admin@onebitdeveloper.onmicrosoft.com"; 
+            Username = "admin@onebitdeveloper.onmicrosoft.com";
         }
 
         private void SetContextCredentials(ClientContext clientContext)

@@ -23,10 +23,10 @@ namespace Client.StandardWithTask
             #endregion
 
             // call the async method, which creates, starts and returns a Task
-                                Log("Calling Task...");
+                                Log("Fire blocking operation asynchronously...");
 
             Task taskObject = GetSharePointDataAsync(clientContext);
-
+            taskObject.GetAwaiter().GetResult();
                                 Log("Task instantiated...");
 
             taskObject.ContinueWith((str) => // register a callback
@@ -75,8 +75,6 @@ namespace Client.StandardWithTask
         {
             //System.Console.WriteLine("Enter username: ");
             Username = "admin@onebitdeveloper.onmicrosoft.com"; //System.Console.ReadLine();
-            //System.Console.WriteLine("Enter password: ");
-            //Password = GetPasswordFromConsoleInput();
 
             // Set client context credentials
             clientContext.Credentials = new SharePointOnlineCredentials(Username, Password);

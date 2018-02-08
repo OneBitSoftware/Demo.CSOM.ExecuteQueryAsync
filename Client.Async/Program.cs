@@ -27,17 +27,18 @@ namespace Client.Async
                     w => w.RootFolder.Folders,
                     w => w.RootFolder);
 
-                // synchronous ExecuteQuery blocks the thread
+                // asynchronous ExecuteQueryAsync returns code flow
                 await clientContext.ExecuteQueryAsync();
 
-                System.Console.WriteLine("This line will show when the thread is unblocked."); // boom
+                Console.WriteLine(@"This line will show when the result is
+                    returned, but the thread will be unblocked.");
 
                 // show output and wait for exit
-                System.Console.WriteLine("Title is: " + clientContext.Web.Title);
-                System.Console.WriteLine("List count is: " + clientContext.Web.Lists.Count);
-                System.Console.WriteLine("Folder count is: " + clientContext.Web.RootFolder.Folders.Count);
-                System.Console.WriteLine("Application is ready. Press any key to exit.");
-                System.Console.ReadLine();
+                Console.WriteLine("Title is: " + clientContext.Web.Title);
+                Console.WriteLine("List count is: " + clientContext.Web.Lists.Count);
+                Console.WriteLine("Folder count is: " + clientContext.Web.RootFolder.Folders.Count);
+                Console.WriteLine("Application is ready. Press any key to exit.");
+                Console.ReadLine();
             }
         }
 
@@ -49,24 +50,6 @@ namespace Client.Async
             return content;
         }
 
-        private static SecureString GetPasswordFromConsoleInput()
-        {
-            ConsoleKeyInfo info;
-
-            //Get the user's password as a SecureString 
-            SecureString securePassword = new SecureString();
-            do
-            {
-                info = System.Console.ReadKey(true);
-                if (info.Key != ConsoleKey.Enter)
-                {
-                    securePassword.AppendChar(info.KeyChar);
-                }
-            }
-            while (info.Key != ConsoleKey.Enter);
-            return securePassword;
-        }
-
         #region Authentication code
         private static void AssignCredentials(ClientContext clientContext)
         {
@@ -74,7 +57,7 @@ namespace Client.Async
             Username = "admin@onebitdeveloper.onmicrosoft.com"; //System.Console.ReadLine();
             //System.Console.WriteLine("Enter password: ");
             //Password = GetPasswordFromConsoleInput();
-
+            
             // Set client context credentials
             clientContext.Credentials = new SharePointOnlineCredentials(Username, Password);
 
